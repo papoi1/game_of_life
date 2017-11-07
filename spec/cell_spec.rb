@@ -9,7 +9,7 @@ describe "When a cell" do
       expect(cell.status).to eq(:alive)
 
       cell = Cell.new(:dead)
-
+#     p cell.class
       expect(cell.status).to eq(:dead)
     end
 
