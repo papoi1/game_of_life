@@ -17,6 +17,31 @@ class World
     @cells[y_dimension][x_dimension] = cell
   end
 
+  def populate
+    cell = Cell.new
+    add_cell(cell, 0, 0)
+#    puts @cells[0][0].actual_status
+
+  end
+
+  def get_dead_cells
+
+    number_of_dead_cells = 0
+    @cells.each { |row|
+      row.each { |cell|
+         return unless cell.respond_to?(actual_status)
+         if col.actual_status == :dead
+           number_of_dead_cells +=1
+         end
+      }
+    }
+    number_of_dead_cells
+  end
+
+  def get_alive_cells
+    0
+  end
+
 end
 
 class Cell

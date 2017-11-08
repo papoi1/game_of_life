@@ -6,20 +6,41 @@ describe "A WORLD" do
     y_dimension = 8
     @world = World.new(x_dimension, y_dimension)
   end
-  
+
   it "has 2 dimensions" do
     expect(@world.dimensions).to eq([4, 8])
   end
-  
+
   it "adds a cell" do
     cell = {actual_status: :dead, next_status: :dead}
     x_pos = 3
     y_pos = 7
-    
+
     @world.add_cell(cell, x_pos, y_pos)
 
     expect(@world.cells[y_pos][x_pos]).to eq(cell)
+  #  expect(@world.get_dead_cells).to eq(1)
+
   end
+
+  it "populates world with dead cells" do
+    total_cells = @world.dimensions[0] * @world.dimensions[1]
+
+    @world.populate
+
+    expect(@world.get_dead_cells).to eq(total_cells)
+    expect(@world.get_alive_cells).to eq(0)
+  end
+
+    it "populates world with alive cells" do
+      total_cells = @world.dimensions[0] * @world.dimensions[1]
+
+      @world.populate
+
+      expect(@world.get_dead_cells).to eq(0)
+      expect(@world.get_alive_cells).to eq(total_cells)
+    end
+
 end
 
 describe "A cell" do
