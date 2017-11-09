@@ -3,24 +3,43 @@
 class World
   attr_reader :cells
 
-  def initialize(x_dimension, y_dimension)
-    @cells = Array.new(y_dimension) { Array.new(x_dimension) }
-  end
+    def initialize(dimensions)
+    @cols_of_world = dimensions[0]
+    @rows_of_world = dimensions[1]
+    @cells = Array.new(@rows_of_world) { Array.new(@cols_of_world) }
+    end
 
   def dimensions
-    y_dimension = @cells.size
-    x_dimension = @cells[0].size
-    [x_dimension, y_dimension]
+    [@cols_of_world, @rows_of_world]
   end
 
-  def add_cell(cell, x_dimension, y_dimension)
-    @cells[y_dimension][x_dimension] = cell
+  def add_cell(cell, position)
+    @cells[position[0]][position[1]] = cell
   end
 
   def populate
-    cell = Cell.new
-    add_cell(cell, 0, 0)
-#    puts @cells[0][0].actual_status
+
+    p "impresion de la cell:\n"
+    p @cells[0][0]
+    fila= 0
+    col= 0
+    @cells.each { |row|
+      row.each { |item|
+      p  item
+      }
+    }
+    p "======"
+
+    @cells.each { |row|
+      row.each { |item|
+        @cells[fila][col] = Cell.new
+        col+=1
+      }
+      fila+=1
+    }
+    # position = [0,1]
+    # add_cell(cell, position)
+   # puts @cells[0][0].actual_status
 
   end
 
@@ -28,13 +47,16 @@ class World
 
     number_of_dead_cells = 0
     @cells.each { |row|
-      row.each { |cell|
-         return unless cell.respond_to?(actual_status)
-         if col.actual_status == :dead
-           number_of_dead_cells +=1
-         end
+      row.each { |col|
+        p col
+        # return number_of_dead_cells unless col.respond_to?(actual_status)
+        if (col.respond_to?(:actual_status) && col.actual_status == :dead )
+          number_of_dead_cells +=1
+          p col.actual_status
+        end
       }
     }
+    p number_of_dead_cells
     number_of_dead_cells
   end
 
@@ -50,6 +72,7 @@ class Cell
   def initialize(actual_status = :dead)
     @actual_status = actual_status
     @next_status = @actual_status
+
   end
 
   def set_next_status(number_of_neighbours)

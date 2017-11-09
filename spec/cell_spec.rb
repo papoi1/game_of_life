@@ -2,23 +2,20 @@ require_relative '../cell.rb'
 
 describe "A WORLD" do
   before(:each) do
-    x_dimension = 4
-    y_dimension = 8
-    @world = World.new(x_dimension, y_dimension)
+    dimensions = [8, 4]
+    @world = World.new(dimensions)
   end
 
   it "has 2 dimensions" do
-    expect(@world.dimensions).to eq([4, 8])
+    expect(@world.dimensions).to eq([8,4])
   end
 
   it "adds a cell" do
     cell = {actual_status: :dead, next_status: :dead}
-    x_pos = 3
-    y_pos = 7
+    position = [3,7]
+    @world.add_cell(cell, position)
 
-    @world.add_cell(cell, x_pos, y_pos)
-
-    expect(@world.cells[y_pos][x_pos]).to eq(cell)
+    expect(@world.cells[position[0]][position[1]]).to eq(cell)
   #  expect(@world.get_dead_cells).to eq(1)
 
   end
