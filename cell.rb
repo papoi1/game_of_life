@@ -1,16 +1,35 @@
+class Cell
+  attr_reader :actual_status, :next_status
+
+  def initialize(actual_status = :dead)
+    @actual_status = actual_status
+    @next_status = @actual_status
+
+  end
+
+  def set_next_status(number_of_neighbours)
+    if(@actual_status == :alive && (number_of_neighbours < 2 || number_of_neighbours > 3))
+      return @next_status = :dead
+    end
+
+    if(@actual_status == :dead && number_of_neighbours == 3)
+      @next_status= :alive
+    end
+  end
+end
 
 
 class World
   attr_reader :cells
 
     def initialize(dimensions)
-    @cols_of_world = dimensions[0]
-    @rows_of_world = dimensions[1]
+    @rows_of_world = dimensions[0]
+    @cols_of_world = dimensions[1]
     @cells = Array.new(@rows_of_world) { Array.new(@cols_of_world) }
     end
 
-  def dimensions
-    [@cols_of_world, @rows_of_world]
+  def get_dimensions
+    [@rows_of_world, @cols_of_world]
   end
 
   def add_cell(cell, position)
@@ -48,28 +67,6 @@ class World
           }
         }
         number_of_alive_cells
-
-  end
-
-end
-
-class Cell
-  attr_reader :actual_status, :next_status
-
-  def initialize(actual_status = :dead)
-    @actual_status = actual_status
-    @next_status = @actual_status
-
-  end
-
-  def set_next_status(number_of_neighbours)
-    if(@actual_status == :alive && (number_of_neighbours < 2 || number_of_neighbours > 3))
-      return @next_status = :dead
-    end
-
-    if(@actual_status == :dead && number_of_neighbours == 3)
-      @next_status= :alive
-    end
 
   end
 
