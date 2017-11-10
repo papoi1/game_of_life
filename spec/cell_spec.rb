@@ -114,3 +114,29 @@ describe "A world" do
     expect(@world.get_alive_cells).to eq(alives)
   end
 end
+
+describe "Draw" do
+  before(:each) do
+    dimensions = [4, 6]
+    @world = World.new(dimensions)
+    @total_cells = @world.get_dimensions[0] * @world.get_dimensions[1]
+  end
+
+  it "draws generation" do
+    cell = Cell.new(:alive)
+
+    position  = [0,0]
+    @world.add_cell(cell, position)
+    position  = [1,1]
+    @world.add_cell(cell, position)
+    position  = [3,5]
+    @world.add_cell(cell, position)
+
+    symbol_dead = "-"
+    symbol_alive = "X"
+    expected = "X-----\n-X----\n------\n-----X"
+    result = @world.draw(symbol_dead, symbol_alive)
+
+    expect(result).to eq(expected)
+  end
+end

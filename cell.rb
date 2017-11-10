@@ -1,3 +1,5 @@
+require './draw.rb'
+
 class Cell
   attr_reader :actual_status, :next_status
 
