@@ -30,12 +30,13 @@ describe "A WORLD" do
   end
 
     it "populates world with alive cells" do
-      total_cells = @world.dimensions[0] * @world.dimensions[1]
 
       @world.populate
+      position = [3,7]
+      @world.add_cell(Cell.new(:alive), position)
 
-      expect(@world.get_dead_cells).to eq(0)
-      expect(@world.get_alive_cells).to eq(total_cells)
+      expect(@world.get_dead_cells).to eq(31)
+      expect(@world.get_alive_cells).to eq(1)
     end
 
 end
@@ -46,6 +47,7 @@ describe "A cell" do
 
       expect(cell.actual_status).to eq(:dead)
     end
+
     it "starts alive" do
       cell = Cell.new(:alive)
 

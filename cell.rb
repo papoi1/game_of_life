@@ -18,50 +18,37 @@ class World
   end
 
   def populate
-
-    p "impresion de la cell:\n"
-    p @cells[0][0]
-    fila= 0
-    col= 0
-    @cells.each { |row|
-      row.each { |item|
-      p  item
+    @cells.map! {|row|
+      row.map! { |item| Cell.new
       }
     }
-    p "======"
-
-    @cells.each { |row|
-      row.each { |item|
-        @cells[fila][col] = Cell.new
-        col+=1
-      }
-      fila+=1
-    }
-    # position = [0,1]
-    # add_cell(cell, position)
-   # puts @cells[0][0].actual_status
-
   end
 
   def get_dead_cells
-
     number_of_dead_cells = 0
     @cells.each { |row|
       row.each { |col|
-        p col
-        # return number_of_dead_cells unless col.respond_to?(actual_status)
-        if (col.respond_to?(:actual_status) && col.actual_status == :dead )
+        if col.actual_status == :dead
           number_of_dead_cells +=1
-          p col.actual_status
         end
+
       }
     }
-    p number_of_dead_cells
     number_of_dead_cells
   end
 
   def get_alive_cells
-    0
+        number_of_alive_cells = 0
+        @cells.each { |row|
+          row.each { |col|
+            if col.actual_status == :alive
+              number_of_alive_cells +=1
+            end
+
+          }
+        }
+        number_of_alive_cells
+
   end
 
 end
