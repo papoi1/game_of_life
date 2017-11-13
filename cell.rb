@@ -18,6 +18,14 @@ class Cell
       @next_status= :alive
     end
   end
+
+  def get_actual_status
+    return @actual_status
+  end
+
+  def force_change_status
+    @actual_status == :alive ?   @actual_status=:dead : @actual_status=:alive
+  end
 end
 
 
@@ -70,6 +78,10 @@ class World
         }
         number_of_alive_cells
 
+  end
+
+  def force_change_status(position)
+    @cells[position[0]][position[1]].force_change_status
   end
 
 end

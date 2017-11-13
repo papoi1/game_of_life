@@ -120,21 +120,22 @@ describe "Draw" do
     dimensions = [4, 6]
     @world = World.new(dimensions)
     @total_cells = @world.get_dimensions[0] * @world.get_dimensions[1]
+    @world.populate
+
   end
 
   it "draws generation" do
-    cell = Cell.new(:alive)
 
     position  = [0,0]
-    @world.add_cell(cell, position)
+    @world.force_change_status(position)
     position  = [1,1]
-    @world.add_cell(cell, position)
+    @world.force_change_status(position)
     position  = [3,5]
-    @world.add_cell(cell, position)
+    @world.force_change_status(position)
 
-    symbol_dead = "-"
-    symbol_alive = "😃"
-    expected = "😃-----\n-😃----\n------\n-----😃"
+    symbol_dead = "X "
+    symbol_alive = "😃 "
+    expected = "😃 X X X X X \nX 😃 X X X X \nX X X X X X \nX X X X X 😃 "
     result = @world.draw(symbol_dead, symbol_alive)
 puts result
     expect(result).to eq(expected)
